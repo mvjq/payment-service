@@ -49,17 +49,8 @@ public class PaymentService implements PaymentUseCase {
         Payment payment = mapper.toDomain(command, webhook);
         Payment saved = paymentPort.save(payment);
         log.info("Payment saved with ID [{}]", saved.getId());
-
-        PaymentCreatedEvent createdEvent = PaymentCreatedEvent
-                .create(
-                        saved.getId(),
-                        saved.getFirstName(),
-                        saved.getLastName(),
-                        saved.getZipCode(),
-                        saved.getEncryptedCardNumber()
-                );
-
-        eventStorePort.store(createdEvent);
+        PaymentCreatedEvent event = PaymentCreatedEvent.create(saved);
+        eventStorePort.store(event);
         log.info("PaymentCreatedEvent stored for Payment ID [{}]", saved.getId());
 
         return mapper.fromDomain(saved);

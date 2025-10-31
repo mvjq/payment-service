@@ -30,7 +30,7 @@ public class PaymentConsumer {
         try {
             log.info("📥 Received payment event: paymentId={}", event.getPaymentId());
 
-            Optional<Webhook> webhook = webhookRepositoryPort.findById(event.getPaymentId());
+            Optional<Webhook> webhook = webhookRepositoryPort.findById(event.getWebhookId());
 
             if (webhook.isEmpty() || !webhook.get().canReceiveEvents()) {
                 log.warn("No active webhooks");

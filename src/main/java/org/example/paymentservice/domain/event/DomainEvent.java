@@ -7,6 +7,7 @@ import java.util.UUID;
 public interface DomainEvent {
     UUID getEventId();
     UUID getPaymentId();
+    UUID getWebhookId();
     String getAggregateType();
     String getEventType();
     LocalDateTime getOccurredAt();

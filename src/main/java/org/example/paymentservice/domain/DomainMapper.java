@@ -45,6 +45,7 @@ public class DomainMapper {
     public Payment toDomain(PaymentEntity entity) {
         return Payment.builder()
                 .id(entity.getId())
+                .webhookId(entity.getWebhookId())
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
                 .zipCode(entity.getZipCode())
@@ -55,6 +56,7 @@ public class DomainMapper {
     public PaymentEntity toEntity(Payment payment) {
         return PaymentEntity.builder()
                 .id(payment.getId())
+                .webhookId(payment.getWebhookId())
                 .firstName(payment.getFirstName())
                 .lastName(payment.getLastName())
                 .zipCode(payment.getZipCode())

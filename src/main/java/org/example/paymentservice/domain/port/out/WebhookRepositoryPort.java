@@ -10,7 +10,6 @@ public interface WebhookRepositoryPort {
     Webhook save(Webhook webhook);
 
     Optional<Webhook> findById(UUID id);
-
     List<Webhook> findAll();
 
     void deleteById(UUID id);

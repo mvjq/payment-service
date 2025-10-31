@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.paymentservice.domain.model.Payment;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class PaymentCreatedEvent implements DomainEvent, Serializable {
 
     private UUID eventId;
     private UUID paymentId;
+    private UUID webhookId;
     private LocalDateTime occurredAt;
     private PaymentEventData eventData;
 
@@ -46,22 +48,17 @@ public class PaymentCreatedEvent implements DomainEvent, Serializable {
         return this.eventData;
     }
 
-    public static PaymentCreatedEvent create(
-            UUID paymentId,
-            String firstName,
-            String lastName,
-            String zipCode,
-            String maskedCardNumber
-    ) {
+    public static PaymentCreatedEvent create(Payment payment) {
         return PaymentCreatedEvent.builder()
                 .eventId(UUID.randomUUID())
-                .paymentId(paymentId)
+                .paymentId(payment.getId())
+                .webhookId(payment.getWebhookId())  // ✅ ADD THIS
                 .occurredAt(LocalDateTime.now())
                 .eventData(PaymentEventData.builder()
-                        .firstName(firstName)
-                        .lastName(lastName)
-                        .zipCode(zipCode)
-                        .maskedCardNumber(maskedCardNumber)
+                        .firstName(payment.getFirstName())
+                        .lastName(payment.getLastName())
+                        .zipCode(payment.getZipCode())
+                        .maskedCardNumber(payment.getEncryptedCardNumber())
                         .build())
                 .build();
     }

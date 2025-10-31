@@ -24,6 +24,9 @@ public class OutboxEventEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(name = "webhook_id")
+    private UUID webhookId;
+
     @Column(name = "payment_id")
     private UUID paymentId;
 
@@ -69,6 +72,7 @@ public class OutboxEventEntity {
             return OutboxEventEntity.builder()
                     .paymentId(event.getPaymentId())
                     .eventType(event.getEventType())
+                    .webhookId(event.getWebhookId())
                     .payload(jsonPayload)
                     .published(false)
                     .retryCount(0)
@@ -82,6 +86,6 @@ public class OutboxEventEntity {
 
     public void incrementRetryWithMessage(String message) {
         this.retryCount++;
-        this.errorMessage = errorMessage;
+        this.errorMessage = message;
     }
 }

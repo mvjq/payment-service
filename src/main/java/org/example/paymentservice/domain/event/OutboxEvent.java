@@ -29,9 +29,9 @@ public class OutboxEvent {
         this.publishedAt = LocalDateTime.now();
     }
 
-    public void incrementRetryWithMessage(String errorMessage) {
+    public void incrementRetryWithMessage(String message) {
         this.retryCount++;
-        this.errorMessage = errorMessage;
+        this.errorMessage = message;
     }
 
     public boolean canRetry(int maxRetries) {

@@ -19,6 +19,9 @@ public class PaymentEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(name = "webhook_id", nullable = false)
+    private UUID webhookId;
+
     @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
 
