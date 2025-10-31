@@ -58,7 +58,7 @@ class WebhookServiceTest {
         when(mapper.toDomain(command)).thenReturn(webhook);
         when(webhookRepositoryPort.save(webhook)).thenReturn(webhook);
 
-        Webhook result = webhookService.execute(command);
+        Webhook result = webhookService.create(command);
 
         assertNotNull(result);
         verify(webhookRepositoryPort).save(webhook);

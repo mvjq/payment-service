@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface WebhookUseCase {
-    Webhook execute(WebhookCommand command);
+    Webhook create(WebhookCommand command);
     Webhook update(UUID uuid, WebhookEntity webhookEntity);
     void deleteWebhook(UUID uuid);
     void disableWebhook(UUID uuid);

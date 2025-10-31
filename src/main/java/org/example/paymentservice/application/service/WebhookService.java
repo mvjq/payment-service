@@ -25,14 +25,9 @@ public class WebhookService implements WebhookUseCase {
 
     @Override
     @Transactional
-    public Webhook execute(WebhookCommand command) {
+    public Webhook create(WebhookCommand command) {
 
         Webhook webhook = mapper.toDomain(command);
-        // save
-        // update
-        // etc
-
-        ///  execute to WebhookResponse
         return webhookRepositoryPort.save(webhook);
     }
     @Override
@@ -49,6 +44,8 @@ public class WebhookService implements WebhookUseCase {
     @Override
     @Transactional
     public void deleteWebhook(UUID uuid) {
+        webhookRepositoryPort.findById(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("Webhook not found"));
         webhookRepositoryPort.deleteById(uuid);
     }
 

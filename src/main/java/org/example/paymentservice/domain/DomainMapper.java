@@ -10,8 +10,6 @@ import org.example.paymentservice.infrastructure.adapter.persistence.entity.Webh
 import org.example.paymentservice.presentation.dto.PaymentResponse;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class DomainMapper {
 
@@ -23,7 +21,6 @@ public class DomainMapper {
 
     public Payment toDomain(PaymentCommand command, Webhook webhook) {
         return Payment.builder()
-                .id(UUID.randomUUID())
                 .webhookId(webhook.getId())
                 .firstName(command.getFirstName())
                 .lastName(command.getLastName())
@@ -54,19 +51,22 @@ public class DomainMapper {
     }
 
     public PaymentEntity toEntity(Payment payment) {
-        return PaymentEntity.builder()
-                .id(payment.getId())
+        PaymentEntity.PaymentEntityBuilder builder = PaymentEntity.builder()
                 .webhookId(payment.getWebhookId())
                 .firstName(payment.getFirstName())
                 .lastName(payment.getLastName())
                 .zipCode(payment.getZipCode())
-                .encryptedCardNumber(payment.getEncryptedCardNumber())
-                .build();
+                .encryptedCardNumber(payment.getEncryptedCardNumber());
+        
+        if (payment.getId() != null) {
+            builder.id(payment.getId());
+        }
+        
+        return builder.build();
     }
 
     public Webhook toDomain(WebhookCommand command) {
         return Webhook.builder()
-                .id(UUID.randomUUID())
                 .url(command.getUrl())
                 .description(command.getDescription())
                 .secret(command.getSecret())
@@ -76,15 +76,19 @@ public class DomainMapper {
 
 
     public WebhookEntity toEntity(Webhook webhook) {
-        return WebhookEntity.builder()
-                .id(webhook.getId())
+        WebhookEntity.WebhookEntityBuilder builder = WebhookEntity.builder()
                 .url(webhook.getUrl())
                 .description(webhook.getDescription())
                 .secret(webhook.getSecret())
                 .isActive(webhook.getIsActive())
                 .createdAt(webhook.getCreatedAt())
-                .updatedAt(webhook.getUpdatedAt())
-                .build();
+                .updatedAt(webhook.getUpdatedAt());
+        
+        if (webhook.getId() != null) {
+            builder.id(webhook.getId());
+        }
+        
+        return builder.build();
     }
 
     public Webhook toDomain(WebhookEntity entity) {

@@ -46,11 +46,6 @@ public class PaymentEntity {
         updatedAt = LocalDateTime.now();
     }
 
-    @PrePersist
-    protected void onUpdated() {
-        updatedAt = LocalDateTime.now();
-    }
-
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
