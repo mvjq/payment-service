@@ -1,4 +1,4 @@
-package org.example.paymentservice.domain.model;
+package org.example.paymentservice.infrastructure.adapter.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Webhook {
+public class WebhookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -47,18 +47,5 @@ public class Webhook {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-    }
-
-
-    public void activate() {
-        this.isActive = true;
-    }
-
-    public void deactivate() {
-        this.isActive = false;
-    }
-
-    public boolean canReceiveEvents() {
-        return Boolean.TRUE.equals(this.isActive);
     }
 }

@@ -1,8 +1,10 @@
-package org.example.paymentservice.domain.model;
+package org.example.paymentservice.infrastructure.adapter.persistence.entity;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.paymentservice.domain.event.DomainEvent;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -16,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OutboxEvent {
+public class OutboxEventEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -50,6 +52,7 @@ public class OutboxEvent {
     @Column(name = "error_message", columnDefinition = "TEXT")
     private String errorMessage;
 
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -62,7 +65,26 @@ public class OutboxEvent {
         this.publishedAt = LocalDateTime.now();
     }
 
-    public void incrementRetry(String errorMessage) {
+    public static OutboxEventEntity from(DomainEvent event, ObjectMapper objectMapper) {
+         try {
+            String jsonPayload = objectMapper.writeValueAsString(event);
+
+            return OutboxEventEntity.builder()
+                    .aggregateId(event.getAggregateId())
+                    .aggregateType(event.getAggregateType())
+                    .eventType(event.getEventType())
+                    .payload(jsonPayload)
+                    .published(false)
+                    .retryCount(0)
+                    .createdAt(LocalDateTime.now())
+                    .build();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to serialize event to JSON", e);
+        }
+    }
+
+    public void incrementRetryWithMessage(String message) {
         this.retryCount++;
         this.errorMessage = errorMessage;
     }
