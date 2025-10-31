@@ -13,7 +13,14 @@ import java.util.UUID;
 public interface OutboxJpaRepository extends JpaRepository<OutboxEventEntity, UUID> {
     @Query("SELECT o FROM OutboxEventEntity o WHERE o.published = false ORDER BY o.createdAt ASC")
     List<OutboxEventEntity> findUnpublishedEvents();
-
-    @Query("SELECT o FROM OutboxEventEntity o WHERE o.published = false AND o.retryCount < :maxRetries ORDER BY o.createdAt ASC :limit")
-    List<OutboxEventEntity> findUnpublishedEventsWithRetryLimit(int maxRetries, @Param("limit") int limit);
+    @Query(value = "SELECT * FROM outbox_events " +
+            "WHERE published = false " +
+            "AND retry_count < :maxRetries " +
+            "ORDER BY created_at ASC " +
+            "LIMIT :limit",
+            nativeQuery = true)
+    List<OutboxEventEntity> findUnpublishedEventsWithRetryLimit(
+            @Param("maxRetries") int maxRetries,
+            @Param("limit") int limit
+    );
 }
