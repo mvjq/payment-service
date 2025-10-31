@@ -5,11 +5,9 @@ import org.example.paymentservice.application.command.WebhookCommand;
 import org.example.paymentservice.application.service.EncryptionService;
 import org.example.paymentservice.domain.model.Payment;
 import org.example.paymentservice.domain.model.Webhook;
-import org.example.paymentservice.domain.model.WebhookHistory;
 import org.example.paymentservice.domain.model.valueobject.WebhookStatus;
 import org.example.paymentservice.infrastructure.adapter.persistence.entity.PaymentEntity;
 import org.example.paymentservice.infrastructure.adapter.persistence.entity.WebhookEntity;
-import org.example.paymentservice.infrastructure.adapter.persistence.entity.WebhookHistoryEntity;
 import org.example.paymentservice.presentation.dto.PaymentResponse;
 import org.springframework.stereotype.Component;
 
@@ -96,30 +94,6 @@ public class DomainMapper {
                 .isActive(entity.getIsActive())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
-                .build();
-    }
-
-    public WebhookHistoryEntity toEntity(WebhookHistory webhookHistory) {
-        return WebhookHistoryEntity.builder()
-                .id(webhookHistory.getId())
-                .webhookId(webhookHistory.getWebhookId())
-                .paymentId(webhookHistory.getPaymentId())
-                .eventId(webhookHistory.getEventId())
-                .status(webhookHistory.getStatus().name())
-                .requestUrl(webhookHistory.getRequestUrl())
-                .requestPayload(webhookHistory.getRequestPayload())
-                .build();
-    }
-
-    public WebhookHistory toDomain(WebhookHistoryEntity entity) {
-        return WebhookHistory.builder()
-                .id(entity.getId())
-                .webhookId(entity.getWebhookId())
-                .paymentId(entity.getPaymentId())
-                .eventId(entity.getEventId())
-                .status(WebhookStatus.valueOf(entity.getStatus()))
-                .requestUrl(entity.getRequestUrl())
-                .requestPayload(entity.getRequestPayload())
                 .build();
     }
 }
