@@ -10,7 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "payments")
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentEntity {

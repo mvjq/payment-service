@@ -48,7 +48,7 @@ public class PaymentService implements PaymentUseCase {
                         saved.getEncryptedCardNumber()
                 );
 
-//        eventStorePort.store(createdEvent);
+        eventStorePort.store(createdEvent);
         log.info("PaymentCreatedEvent stored for Payment ID [{}]", saved.getId());
 
         return mapper.fromDomain(saved);
