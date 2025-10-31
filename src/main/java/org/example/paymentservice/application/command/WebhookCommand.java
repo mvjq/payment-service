@@ -1,5 +1,7 @@
-package org.example.paymentservice.domain.port.in;
+package org.example.paymentservice.application.command;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
