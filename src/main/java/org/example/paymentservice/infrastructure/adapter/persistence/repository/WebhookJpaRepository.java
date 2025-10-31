@@ -8,5 +8,4 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface WebhookJpaRepository extends JpaRepository<WebhookEntity, UUID> {
-    Optional<WebhookEntity> findByPaymentId(UUID paymentId);
 }

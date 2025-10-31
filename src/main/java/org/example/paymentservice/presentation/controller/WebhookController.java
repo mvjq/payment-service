@@ -35,7 +35,7 @@ public class WebhookController {
         WebhookCommand command = mapper.toCommand(request);
 
 
-        Webhook webhook = webhookUseCase.execute(command);
+        Webhook webhook = webhookUseCase.create(command);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(WebhookResponse.fromDomain(webhook));
