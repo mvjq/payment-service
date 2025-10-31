@@ -1,10 +1,12 @@
-package org.example.paymentservice.infrastructure.adapter.in.rest;
+package org.example.paymentservice.presentation.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.paymentservice.domain.port.in.PaymentUseCase;
-import org.example.paymentservice.infrastructure.adapter.in.rest.dto.PaymentRequest;
-import org.example.paymentservice.infrastructure.adapter.in.rest.dto.PaymentResponse;
+import org.example.paymentservice.application.command.PaymentCommand;
+import org.example.paymentservice.application.port.in.PaymentUseCase;
+import org.example.paymentservice.presentation.CommandMapper;
+import org.example.paymentservice.presentation.dto.PaymentRequest;
+import org.example.paymentservice.presentation.dto.PaymentResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,13 @@ import java.net.URI;
 public class PaymentController {
 
     private final PaymentUseCase paymentUseCase;
+    private final CommandMapper mapper;
 
     @PostMapping
     public ResponseEntity<PaymentResponse> createPayment(@Validated @RequestBody PaymentRequest request) {
-        PaymentResponse response = paymentUseCase.createPayment(request.toCommand());
+
+        PaymentCommand command = mapper.toCommand(request);
+        PaymentResponse response = paymentUseCase.execute(command);
 
         return ResponseEntity.created(URI.create("/api/v1/payments")).body(response);
     }
