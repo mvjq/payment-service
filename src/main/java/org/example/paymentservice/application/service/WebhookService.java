@@ -3,11 +3,9 @@ package org.example.paymentservice.application.service;
 import jakarta.transaction.Transactional;
 import org.example.paymentservice.domain.DomainMapper;
 import org.example.paymentservice.domain.model.Webhook;
-import org.example.paymentservice.domain.model.WebhookHistory;
 import org.example.paymentservice.infrastructure.adapter.persistence.entity.WebhookEntity;
 import org.example.paymentservice.application.command.WebhookCommand;
 import org.example.paymentservice.application.port.in.WebhookUseCase;
-import org.example.paymentservice.domain.port.out.WebhookHistoryRepositoryPort;
 import org.example.paymentservice.domain.port.out.WebhookRepositoryPort;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +16,10 @@ import java.util.UUID;
 public class WebhookService implements WebhookUseCase {
 
     private final WebhookRepositoryPort webhookRepositoryPort;
-    private final WebhookHistoryRepositoryPort webhookHistoryRepositoryPort;
     private final DomainMapper mapper;
 
-    public WebhookService(WebhookRepositoryPort webhookRepositoryPort, WebhookHistoryRepositoryPort webhookHistoryRepositoryPort, DomainMapper mapper) {
+    public WebhookService(WebhookRepositoryPort webhookRepositoryPort, DomainMapper mapper) {
         this.webhookRepositoryPort = webhookRepositoryPort;
-        this.webhookHistoryRepositoryPort = webhookHistoryRepositoryPort;
         this.mapper = mapper;
     }
 
@@ -76,17 +72,5 @@ public class WebhookService implements WebhookUseCase {
     @Override
     public List<Webhook> findAllWebhooks() {
         return webhookRepositoryPort.findAll();
-    }
-
-    @Override
-    public List<WebhookHistory> findWebhookHistory(UUID webhookId) {
-        return List.of();
-    }
-
-    @Override
-    public List<WebhookHistory> findWebhookHistoryByPaymentUUID(UUID paymentId) {
-        // TODO add custom exception
-        // in global handler
-        return webhookHistoryRepositoryPort.findByPaymentId(paymentId);
     }
 }

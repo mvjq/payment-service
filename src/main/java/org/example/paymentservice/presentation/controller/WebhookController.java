@@ -4,9 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.paymentservice.domain.model.Webhook;
-import org.example.paymentservice.domain.model.WebhookHistory;
 import org.example.paymentservice.infrastructure.adapter.persistence.entity.WebhookEntity;
-import org.example.paymentservice.infrastructure.adapter.persistence.entity.WebhookHistoryEntity;
 import org.example.paymentservice.application.command.WebhookCommand;
 import org.example.paymentservice.application.port.in.WebhookUseCase;
 import org.example.paymentservice.presentation.CommandMapper;
@@ -82,21 +80,5 @@ public class WebhookController {
         webhookUseCase.disableWebhook(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    @GetMapping("/{id}/history")
-    public ResponseEntity<List<WebhookHistory>> findWebhookHistory(@PathVariable UUID id) {
-
-        List<WebhookHistory> history = webhookUseCase.findWebhookHistory(id);
-        
-        return ResponseEntity.status(HttpStatus.FOUND).body(history);
-    }
-
-    @GetMapping("/payments/{paymentId}/history")
-    public ResponseEntity<List<WebhookHistory>> findWebhookHistoryByPaymentUUID(@PathVariable UUID paymentId) {
-
-        List<WebhookHistory> history = webhookUseCase.findWebhookHistoryByPaymentUUID(paymentId);
-        
-        return ResponseEntity.status(HttpStatus.FOUND).body(history);
     }
 }
