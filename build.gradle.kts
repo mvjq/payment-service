@@ -25,8 +25,8 @@ repositories {
 }
 
 dependencies {
-    // flyway for migrations
     implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-database-postgresql")
 
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
