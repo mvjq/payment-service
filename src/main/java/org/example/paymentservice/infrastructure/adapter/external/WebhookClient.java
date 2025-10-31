@@ -15,10 +15,13 @@ import java.awt.*;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class WebhookClient implements WebhookClientPort {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+
+    public WebhookClient(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public WebhookClientResponse sendWebhook(String url, String payload, String secret) {
