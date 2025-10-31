@@ -1,7 +1,6 @@
 package org.example.paymentservice.infrastructure.adapter.external;
 
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.paymentservice.domain.port.out.WebhookClientPort;
 import org.springframework.http.*;
@@ -9,8 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import java.awt.*;
 
 
 @Slf4j

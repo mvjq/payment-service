@@ -7,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Field;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -22,12 +20,9 @@ class WebhookClientTest {
     private RestTemplate restTemplate;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         restTemplate = mock(RestTemplate.class);
         webhookClient = new WebhookClient(restTemplate);
-        Field field = WebhookClient.class.getDeclaredField("restTemplate");
-        field.setAccessible(true);
-        field.set(webhookClient, restTemplate);
     }
 
     @Test
