@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface DomainEvent {
     UUID getEventId();
-    UUID getAggregateId();
+    UUID getPaymentId();
     String getAggregateType();
     String getEventType();
     LocalDateTime getOccurredAt();

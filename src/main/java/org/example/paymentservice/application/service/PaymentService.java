@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.paymentservice.domain.DomainMapper;
 import org.example.paymentservice.domain.event.PaymentCreatedEvent;
 import org.example.paymentservice.domain.model.Payment;
+import org.example.paymentservice.domain.model.Webhook;
+import org.example.paymentservice.domain.port.out.WebhookRepositoryPort;
 import org.example.paymentservice.infrastructure.adapter.persistence.entity.PaymentEntity;
 import org.example.paymentservice.application.command.PaymentCommand;
 import org.example.paymentservice.application.port.in.PaymentUseCase;
@@ -20,13 +22,15 @@ public class PaymentService implements PaymentUseCase {
 
     private final PaymentRepositoryPort paymentPort;
     private final EncryptionService encryptionService;
+    private final WebhookRepositoryPort webhookRepository;
     private final EventStorePort eventStorePort;
     private final DomainMapper mapper;
 
 
-    public PaymentService(PaymentRepositoryPort paymentPort, EncryptionService encryptionService, EventStorePort eventStorePort, DomainMapper mapper) {
+    public PaymentService(PaymentRepositoryPort paymentPort, EncryptionService encryptionService, WebhookRepositoryPort webhookRepository, EventStorePort eventStorePort, DomainMapper mapper) {
         this.paymentPort = paymentPort;
         this.encryptionService = encryptionService;
+        this.webhookRepository = webhookRepository;
         this.eventStorePort = eventStorePort;
         this.mapper = mapper;
     }
@@ -35,7 +39,14 @@ public class PaymentService implements PaymentUseCase {
     @Override
     public PaymentResponse execute(PaymentCommand command) {
 
-        Payment payment = mapper.toDomain(command);
+        Webhook webhook = webhookRepository.findById(command.getWebhookUUID())
+                .orElseThrow(() -> new IllegalArgumentException("Webhook not found for UUID: " + command.getWebhookUUID()));
+
+        if (!webhook.canReceiveEvents()) {
+            throw new IllegalStateException("Webhook not active to receive events.");
+        }
+
+        Payment payment = mapper.toDomain(command, webhook);
         Payment saved = paymentPort.save(payment);
         log.info("Payment saved with ID [{}]", saved.getId());
 

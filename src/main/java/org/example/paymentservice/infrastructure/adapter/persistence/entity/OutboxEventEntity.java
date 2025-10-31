@@ -24,11 +24,8 @@ public class OutboxEventEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "aggregate_id", nullable = false)
-    private UUID aggregateId;
-
-    @Column(name = "aggregate_type", nullable = false, length = 50)
-    private String aggregateType;
+    @Column(name = "payment_id")
+    private UUID paymentId;
 
     @Column(name = "event_type", nullable = false, length = 100)
     private String eventType;
@@ -70,8 +67,7 @@ public class OutboxEventEntity {
             String jsonPayload = objectMapper.writeValueAsString(event);
 
             return OutboxEventEntity.builder()
-                    .aggregateId(event.getAggregateId())
-                    .aggregateType(event.getAggregateType())
+                    .paymentId(event.getPaymentId())
                     .eventType(event.getEventType())
                     .payload(jsonPayload)
                     .published(false)

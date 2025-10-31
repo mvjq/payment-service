@@ -8,9 +8,10 @@ import java.util.UUID;
 
 public interface WebhookRepositoryPort {
     Webhook save(Webhook webhook);
-    Optional<Webhook> findByUUID(UUID id);
-    Optional<Webhook> findbyPaymentUUID(UUID paymentId);
-    List<Webhook> findByActiveTrue();
+
+    Optional<Webhook> findById(UUID id);
+
     List<Webhook> findAll();
+
     void deleteById(UUID id);
 }

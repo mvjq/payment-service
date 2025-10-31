@@ -24,8 +24,8 @@ public class OutboxEventStore implements EventStorePort {
         try {
             OutboxEventEntity outboxEventEntity = OutboxEventEntity.from(event, objectMapper);
             outboxRepository.save(outboxEventEntity);
-            log.info("Persisted event to outbox: eventType=[{}], aggregateId=[{}]",
-                    event.getEventType(), event.getAggregateId());
+            log.info("Persisted event to outbox: eventType=[{}], paymentId=[{}]",
+                    event.getEventType(), event.getPaymentId());
         } catch (Exception e) {
             // TODO implement custom exception
             throw new RuntimeException("Failed to publish event to outbox", e);

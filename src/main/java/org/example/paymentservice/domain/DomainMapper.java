@@ -5,7 +5,6 @@ import org.example.paymentservice.application.command.WebhookCommand;
 import org.example.paymentservice.application.service.EncryptionService;
 import org.example.paymentservice.domain.model.Payment;
 import org.example.paymentservice.domain.model.Webhook;
-import org.example.paymentservice.domain.model.valueobject.WebhookStatus;
 import org.example.paymentservice.infrastructure.adapter.persistence.entity.PaymentEntity;
 import org.example.paymentservice.infrastructure.adapter.persistence.entity.WebhookEntity;
 import org.example.paymentservice.presentation.dto.PaymentResponse;
@@ -22,9 +21,10 @@ public class DomainMapper {
         this.encryptionService = encryptionService;
     }
 
-    public Payment toDomain(PaymentCommand command) {
+    public Payment toDomain(PaymentCommand command, Webhook webhook) {
         return Payment.builder()
                 .id(UUID.randomUUID())
+                .webhookId(webhook.getId())
                 .firstName(command.getFirstName())
                 .lastName(command.getLastName())
                 .zipCode(command.getZipCode())

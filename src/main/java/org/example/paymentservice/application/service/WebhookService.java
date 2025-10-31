@@ -38,7 +38,7 @@ public class WebhookService implements WebhookUseCase {
     @Override
     @Transactional
     public Webhook update(UUID uuid, WebhookEntity webhookEntity) {
-        Webhook found = webhookRepositoryPort.findByUUID(uuid)
+        Webhook found = webhookRepositoryPort.findById(uuid)
                 .orElseThrow(() -> new IllegalArgumentException("Webhook not found"));
 
         // found.update(webhookEntity);
@@ -56,15 +56,15 @@ public class WebhookService implements WebhookUseCase {
     @Override
     @Transactional
     public void disableWebhook(UUID uuid) {
-        Webhook found = webhookRepositoryPort.findByUUID(uuid)
+        Webhook found = webhookRepositoryPort.findById(uuid)
                 .orElseThrow(() -> new IllegalArgumentException("Webhook not found"));
         found.deactivate();
         webhookRepositoryPort.save(found);
     }
 
     @Override
-    public Webhook findWebhookByPaymentUUID(UUID paymentId) {
-        return webhookRepositoryPort.findbyPaymentUUID(paymentId)
+    public Webhook findWebhookByPaymentId(UUID paymentId) {
+        return webhookRepositoryPort.findById(paymentId)
                 // TODO add custom exception
                 .orElseThrow(() -> new IllegalArgumentException("Webhook not found for " + paymentId));
     }

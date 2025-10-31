@@ -13,11 +13,12 @@ public class CommandMapper {
 
     public PaymentCommand toCommand(PaymentRequest request) {
         return PaymentCommand.builder()
-                    .firstName(request.firstName())
-                    .lastName(request.lastName())
-                    .zipCode(request.zipCode())
-                    .cardNumber(request.cardNumber())
-                    .build();
+                .webhookUUID(request.webhokUUID())
+                .firstName(request.firstName())
+                .lastName(request.lastName())
+                .zipCode(request.zipCode())
+                .cardNumber(request.cardNumber())
+                .build();
     }
 
     public WebhookCommand toCommand(WebhookRequest request) {

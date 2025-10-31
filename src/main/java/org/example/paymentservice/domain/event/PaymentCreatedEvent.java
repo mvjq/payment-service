@@ -16,7 +16,7 @@ import java.util.UUID;
 public class PaymentCreatedEvent implements DomainEvent, Serializable {
 
     private UUID eventId;
-    private UUID aggregateId; // paymentId
+    private UUID paymentId;
     private LocalDateTime occurredAt;
     private PaymentEventData eventData;
 
@@ -55,7 +55,7 @@ public class PaymentCreatedEvent implements DomainEvent, Serializable {
     ) {
         return PaymentCreatedEvent.builder()
                 .eventId(UUID.randomUUID())
-                .aggregateId(paymentId)
+                .paymentId(paymentId)
                 .occurredAt(LocalDateTime.now())
                 .eventData(PaymentEventData.builder()
                         .firstName(firstName)

@@ -12,6 +12,6 @@ public interface WebhookUseCase {
     Webhook update(UUID uuid, WebhookEntity webhookEntity);
     void deleteWebhook(UUID uuid);
     void disableWebhook(UUID uuid);
-    Webhook findWebhookByPaymentUUID(UUID paymentId);
+    Webhook findWebhookByPaymentId(UUID paymentId);
     List<Webhook> findAllWebhooks();
 }
