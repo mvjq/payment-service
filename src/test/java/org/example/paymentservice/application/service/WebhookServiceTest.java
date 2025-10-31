@@ -86,11 +86,22 @@ class WebhookServiceTest {
 
     @Test
     void shouldDeleteWebhook() {
+        when(webhookRepositoryPort.findById(webhookId)).thenReturn(Optional.of(webhook));
         doNothing().when(webhookRepositoryPort).deleteById(webhookId);
 
         webhookService.deleteWebhook(webhookId);
 
+        verify(webhookRepositoryPort).findById(webhookId);
         verify(webhookRepositoryPort).deleteById(webhookId);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDeletingNonExistentWebhook() {
+        when(webhookRepositoryPort.findById(webhookId)).thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class, () -> 
+            webhookService.deleteWebhook(webhookId)
+        );
     }
 
     @Test
