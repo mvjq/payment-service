@@ -117,6 +117,7 @@ The API is fully documented using OpenAPI 3.0 specification. Once the applicatio
 - `DELETE /api/v1/webhooks/{id}` - Delete a webhook
 - `POST /api/v1/webhooks/{id}/disable` - Disable a webhook
 
+
 # Architecture Decisions
 
 So my idea for implementing this project is to stay close to the real world and relate my knowledge and experience from
