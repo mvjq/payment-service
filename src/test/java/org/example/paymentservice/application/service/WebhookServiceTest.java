@@ -86,10 +86,12 @@ class WebhookServiceTest {
 
     @Test
     void shouldDeleteWebhook() {
+        when(webhookRepositoryPort.findById(webhookId)).thenReturn(Optional.of(webhook));
         doNothing().when(webhookRepositoryPort).deleteById(webhookId);
 
         webhookService.deleteWebhook(webhookId);
 
+        verify(webhookRepositoryPort).findById(webhookId);
         verify(webhookRepositoryPort).deleteById(webhookId);
     }
 
