@@ -112,4 +112,28 @@ class PaymentConsumerTest {
             paymentConsumer.consumePaymentCreated(event)
         );
     }
+
+    @Test
+    void shouldThrowExceptionWhenJsonSerializationFails() throws Exception {
+        when(webhookRepositoryPort.findById(webhookId)).thenReturn(Optional.of(webhook));
+        when(objectMapper.writeValueAsString(event)).thenThrow(new RuntimeException("JSON serialization error"));
+
+        assertThrows(RuntimeException.class, () -> 
+            paymentConsumer.consumePaymentCreated(event)
+        );
+
+        verify(webhookClientPort, never()).sendWebhook(anyString(), anyString(), anyString());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenWebhookClientThrowsException() throws Exception {
+        when(webhookRepositoryPort.findById(webhookId)).thenReturn(Optional.of(webhook));
+        when(objectMapper.writeValueAsString(event)).thenReturn(PAYMENT_DATA);
+        when(webhookClientPort.sendWebhook(anyString(), anyString(), anyString()))
+                .thenThrow(new RuntimeException("Network error"));
+
+        assertThrows(RuntimeException.class, () -> 
+            paymentConsumer.consumePaymentCreated(event)
+        );
+    }
 }
