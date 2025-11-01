@@ -27,18 +27,95 @@ The coding task is to create a simple payment application.
 
 ## Features
 
+- ✅ **Payment Processing**: Create payments with encrypted card number storage
+- ✅ **Dynamic Webhooks**: Register HTTP endpoints to receive payment notifications
+- ✅ **Resilient Delivery**: Outbox pattern + RabbitMQ retry mechanism with DLQ
+- ✅ **API Documentation**: Complete OpenAPI 3.0 specification with Swagger UI
+- ✅ **Hexagonal Architecture**: Clean separation of concerns with ports and adapters
+- ✅ **Database Migrations**: Flyway for version-controlled schema changes
+- ✅ **Containerization**: Docker Compose setup for easy deployment
+- ✅ **Comprehensive Testing**: Unit tests, integration tests with Testcontainers
+
+## Technologies Used
+
+- **Java 21** with Spring Boot 3.5.7
+- **PostgreSQL 16** for data persistence
+- **RabbitMQ 3.13** for message queuing
+- **Flyway** for database migrations
+- **Spring Security** for authentication
+- **SpringDoc OpenAPI** for API documentation
+- **Testcontainers** for integration testing
+- **Lombok** for reducing boilerplate code
+- **JaCoCo** for code coverage
+
 # How to Run
 
-```shell
-./gradlew bootRun
+## Prerequisites
 
-# testings (unit/integration)
-./gradle :test
-# because i use test containers and build a rabbitqm, somethings 
-# a timeout from the rabbitq happens between the tests, sorry!
+- Java 21 or higher
+- Docker and Docker Compose (for running dependencies)
+- Gradle (wrapper included in the project)
+
+## Running with Docker Compose (Recommended)
+
+This will start PostgreSQL, RabbitMQ, and the application in containers:
+
+```shell
+docker-compose up -d
 ```
 
+The application will be available at:
+- **Application**: http://localhost:8080
+- **Swagger UI**: http://localhost:8080/swagger-ui.html (user: user, password: check console output)
+- **OpenAPI Spec**: http://localhost:8080/v3/api-docs (user: user, password: check console output)
+- **RabbitMQ Management**: http://localhost:15672 (user: guest, password: guest)
+
+To stop all services:
+```shell
+docker-compose down
+```
+
+## Running Locally
+
+1. Start the required services (PostgreSQL and RabbitMQ):
+```shell
+docker-compose up -d postgres rabbitmq
+```
+
+2. Run the application:
+```shell
+./gradlew bootRun
+```
+
+## Running Tests
+
+```shell
+./gradlew test
+
+# Run tests with coverage report
+./gradlew test jacocoTestReport
+```
+
+**Note**: Tests use Testcontainers to spin up PostgreSQL and RabbitMQ containers. Occasionally, RabbitMQ timeouts may occur between tests.
+
 ## API Documentation
+
+The API is fully documented using OpenAPI 3.0 specification. Once the application is running:
+
+- **Interactive API Documentation**: Navigate to http://localhost:8080/swagger-ui.html
+- **OpenAPI JSON**: Available at http://localhost:8080/v3/api-docs
+
+### API Endpoints
+
+#### Payment API
+- `POST /api/v1/payments` - Create a new payment
+
+#### Webhook API
+- `POST /api/v1/webhooks` - Register a new webhook
+- `GET /api/v1/webhooks` - List all webhooks
+- `PUT /api/v1/webhooks/{id}` - Update a webhook
+- `DELETE /api/v1/webhooks/{id}` - Delete a webhook
+- `POST /api/v1/webhooks/{id}/disable` - Disable a webhook
 
 # Architecture Decisions
 
