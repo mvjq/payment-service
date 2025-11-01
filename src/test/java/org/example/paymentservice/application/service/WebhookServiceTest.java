@@ -105,4 +105,37 @@ class WebhookServiceTest {
         assertEquals(1, result.size());
         verify(webhookRepositoryPort).findAll();
     }
+
+    @Test
+    void shouldUpdateWebhook() {
+        WebhookCommand command = WebhookCommand.builder()
+                .url("http://updated.com/webhook")
+                .description("Updated description")
+                .secret("newsecret")
+                .build();
+
+        when(webhookRepositoryPort.findById(webhookId)).thenReturn(Optional.of(webhook));
+        when(webhookRepositoryPort.save(any(Webhook.class))).thenReturn(webhook);
+
+        Webhook result = webhookService.update(webhookId, command);
+
+        assertNotNull(result);
+        assertEquals("http://updated.com/webhook", webhook.getUrl());
+        assertEquals("Updated description", webhook.getDescription());
+        assertEquals("newsecret", webhook.getSecret());
+        verify(webhookRepositoryPort).save(webhook);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenUpdatingNonExistentWebhook() {
+        WebhookCommand command = WebhookCommand.builder()
+                .url("http://updated.com/webhook")
+                .build();
+
+        when(webhookRepositoryPort.findById(webhookId)).thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class, () -> 
+            webhookService.update(webhookId, command)
+        );
+    }
 }

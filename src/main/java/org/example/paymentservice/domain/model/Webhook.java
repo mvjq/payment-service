@@ -19,7 +19,7 @@ public class Webhook {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    
+
     public void activate() {
         this.isActive = true;
     }
@@ -32,4 +32,19 @@ public class Webhook {
         return Boolean.TRUE.equals(this.isActive);
     }
 
+    public void update(String url, String description, String secret, Boolean isActive) {
+        if (url != null && !url.isBlank()) {
+            this.url = url;
+        }
+        if (description != null) {
+            this.description = description;
+        }
+        if (secret != null && !secret.isBlank()) {
+            this.secret = secret;
+        }
+        if (isActive != null) {
+            this.isActive = isActive;
+        }
+        this.updatedAt = LocalDateTime.now();
+    }
 }

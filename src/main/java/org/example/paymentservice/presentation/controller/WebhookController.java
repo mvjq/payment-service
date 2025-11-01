@@ -11,7 +11,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.paymentservice.domain.model.Webhook;
-import org.example.paymentservice.infrastructure.adapter.persistence.entity.WebhookEntity;
 import org.example.paymentservice.application.command.WebhookCommand;
 import org.example.paymentservice.application.port.in.WebhookUseCase;
 import org.example.paymentservice.presentation.CommandMapper;
@@ -87,13 +86,13 @@ public class WebhookController {
             @Parameter(description = "Webhook ID", required = true) @PathVariable UUID id,
             @Valid @RequestBody WebhookRequest request) {
 
-        WebhookEntity webhookEntityUpdate = WebhookEntity.builder()
+        WebhookCommand command = WebhookCommand.builder()
                 .url(request.getUrl())
+                .description(request.getDescription())
                 .secret(request.getSecret())
-                .isActive(request.getActive())
                 .build();
 
-         Webhook webhook = webhookUseCase.update(id, webhookEntityUpdate);
+         Webhook webhook = webhookUseCase.update(id, command);
         
         return ResponseEntity.status(HttpStatus.OK).body(WebhookResponse.fromDomain(webhook));
     }

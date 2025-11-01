@@ -3,7 +3,6 @@ package org.example.paymentservice.application.service;
 import jakarta.transaction.Transactional;
 import org.example.paymentservice.domain.DomainMapper;
 import org.example.paymentservice.domain.model.Webhook;
-import org.example.paymentservice.infrastructure.adapter.persistence.entity.WebhookEntity;
 import org.example.paymentservice.application.command.WebhookCommand;
 import org.example.paymentservice.application.port.in.WebhookUseCase;
 import org.example.paymentservice.domain.port.out.WebhookRepositoryPort;
@@ -32,11 +31,16 @@ public class WebhookService implements WebhookUseCase {
     }
     @Override
     @Transactional
-    public Webhook update(UUID uuid, WebhookEntity webhookEntity) {
+    public Webhook update(UUID uuid, WebhookCommand command) {
         Webhook found = webhookRepositoryPort.findById(uuid)
                 .orElseThrow(() -> new IllegalArgumentException("Webhook not found"));
 
-        // found.update(webhookEntity);
+        found.update(
+            command.getUrl(),
+            command.getDescription(),
+            command.getSecret(),
+            null
+        );
 
         return webhookRepositoryPort.save(found);
     }
