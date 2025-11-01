@@ -151,6 +151,11 @@ Diagram of these components:
 
 ![img_3.png](img_3.png)
 
+#### Diagrams
+
+For more, Access [https://miro.com/welcomeonboard/T3prRUlJbEVrYnBPM2RxQ3RmQSsxMHh0V0FiaDB4UDhsNGlqbFZRckhBbGhwRTNVZ29NN1c0eUI0aHNSaDZZMXdJbFY0SFRobHNCUlZhaWNQMUV2R3hrSjljWVVScUd3elA1WlNYR0drZC9JclJTak42emxHTTBWdWgxTlYrWjVzVXVvMm53MW9OWFg5bkJoVXZxdFhRPT0hdjE=?share_link_id=834449330171](Miro Board)
+
+
 ### Benefits
 
 - separation of concerns
@@ -183,9 +188,6 @@ a message broker (which handles the webhook in our case)
       dead-letter queue (DLQ)
       for further analysis or manual intervention.
 
-#### Diagrams
-
-Access [https://miro.com/welcomeonboard/T3prRUlJbEVrYnBPM2RxQ3RmQSsxMHh0V0FiaDB4UDhsNGlqbFZRckhBbGhwRTNVZ29NN1c0eUI0aHNSaDZZMXdJbFY0SFRobHNCUlZhaWNQMUV2R3hrSjljWVVScUd3elA1WlNYR0drZC9JclJTak42emxHTTBWdWgxTlYrWjVzVXVvMm53MW9OWFg5bkJoVXZxdFhRPT0hdjE=?share_link_id=834449330171](Miro Board)
 
 ## Future Improvements
 
