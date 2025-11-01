@@ -99,7 +99,7 @@ class PaymentControllerIntegrationTest {
     @DisplayName("Should create payment successfully with valid data")
     void shouldCreatePaymentSuccessfully() throws Exception {
         PaymentRequest request = PaymentRequest.builder()
-                .webhokUUID(webhookId)
+                .webhookUUID(webhookId)
                 .firstName("John")
                 .lastName("Doe")
                 .zipCode("12345")
@@ -123,7 +123,7 @@ class PaymentControllerIntegrationTest {
     @DisplayName("Should return 400 when firstName is missing")
     void shouldReturnBadRequestWhenFirstNameIsMissing() throws Exception {
         PaymentRequest request = PaymentRequest.builder()
-                .webhokUUID(webhookId)
+                .webhookUUID(webhookId)
                 .lastName("Doe")
                 .zipCode("12345")
                 .cardNumber("4111111111111111")
@@ -140,7 +140,7 @@ class PaymentControllerIntegrationTest {
     @DisplayName("Should return 400 when lastName is missing")
     void shouldReturnBadRequestWhenLastNameIsMissing() throws Exception {
         PaymentRequest request = PaymentRequest.builder()
-                .webhokUUID(webhookId)
+                .webhookUUID(webhookId)
                 .firstName("John")
                 .zipCode("12345")
                 .cardNumber("4111111111111111")
@@ -157,7 +157,7 @@ class PaymentControllerIntegrationTest {
     @DisplayName("Should return 400 when zipCode is missing")
     void shouldReturnBadRequestWhenZipCodeIsMissing() throws Exception {
         PaymentRequest request = PaymentRequest.builder()
-                .webhokUUID(webhookId)
+                .webhookUUID(webhookId)
                 .firstName("John")
                 .lastName("Doe")
                 .cardNumber("4111111111111111")
@@ -174,7 +174,7 @@ class PaymentControllerIntegrationTest {
     @DisplayName("Should return 400 when cardNumber is missing")
     void shouldReturnBadRequestWhenCardNumberIsMissing() throws Exception {
         PaymentRequest request = PaymentRequest.builder()
-                .webhokUUID(webhookId)
+                .webhookUUID(webhookId)
                 .firstName("John")
                 .lastName("Doe")
                 .zipCode("12345")
@@ -209,7 +209,7 @@ class PaymentControllerIntegrationTest {
     void shouldReturnBadRequestWhenWebhookDoesNotExist() throws Exception {
         UUID nonExistentWebhookId = UUID.randomUUID();
         PaymentRequest request = PaymentRequest.builder()
-                .webhokUUID(nonExistentWebhookId)
+                .webhookUUID(nonExistentWebhookId)
                 .firstName("John")
                 .lastName("Doe")
                 .zipCode("12345")
@@ -227,7 +227,7 @@ class PaymentControllerIntegrationTest {
     @DisplayName("Should mask card number in response")
     void shouldMaskCardNumberInResponse() throws Exception {
         PaymentRequest request = PaymentRequest.builder()
-                .webhokUUID(webhookId)
+                .webhookUUID(webhookId)
                 .firstName("Jane")
                 .lastName("Smith")
                 .zipCode("54321")
@@ -248,7 +248,7 @@ class PaymentControllerIntegrationTest {
     @DisplayName("Should create payment and generate outbox event")
     void shouldCreatePaymentAndGenerateOutboxEvent() throws Exception {
         PaymentRequest request = PaymentRequest.builder()
-                .webhokUUID(webhookId)
+                .webhookUUID(webhookId)
                 .firstName("Alice")
                 .lastName("Johnson")
                 .zipCode("99999")

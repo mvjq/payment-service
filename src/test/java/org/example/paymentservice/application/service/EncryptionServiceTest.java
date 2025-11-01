@@ -14,8 +14,7 @@ class EncryptionServiceTest {
     @BeforeEach
     void setUp() {
         encryptionService = new EncryptionService();
-        ReflectionTestUtils.setField(encryptionService, "password", "test-password");
-        ReflectionTestUtils.setField(encryptionService, "salt", "deadbeef");
+        ReflectionTestUtils.setField(encryptionService, "secretKey", "1234567890123456");
         encryptionService.init();
     }
 
