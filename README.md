@@ -123,16 +123,15 @@ The API is fully documented using OpenAPI 3.0 specification. Once the applicatio
 So my idea for implementing this project is to stay close to the real world and relate my knowledge and experience from
 previous projects. So my approach was
 
-- identify the best architecture that could be my extensibility (when I could change some technology or add new
+- identify the best architecture that could be extensible ( I could change some technology or add new
   features)
-- a structure that anyone with small knowledge about the architecture could find the foot.
+- a structure that anyone with small knowledge about the architecture could find things.
 - Implementing resilience for webhook through event-based patterns.
 
 ## Hexagonal Architecture
 
 So for this project, I decided to use the hexagonal architecture (also known as ports and adapters) because this
-architecture
-Help me achieve the goals mentioned before.
+architecture help me achieve the goals mentioned before.
 
 In the hexagonal architecture, we have the following components:
 
