@@ -27,6 +27,7 @@ public class OutboxPublisherScheduler {
     private static final int MAX_RETRIES = 3;
     private static final int BATCH_SIZE = 100;
 
+    // 10 seconds
     @Scheduled(fixedDelay = 10000)
     @Transactional
     public void publishPendingEvents() {

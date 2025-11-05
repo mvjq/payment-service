@@ -17,7 +17,7 @@ public class DLQScheduler {
     private final RabbitTemplate rabbitTemplate;
 
     // 1 hour
-    @Scheduled(fixedDelay = 3600000, initialDelay = 60000) // 1 hour
+    @Scheduled(fixedDelay = 3600000, initialDelay = 60000) // initial delay 1 min
     public void retryDlqMessages() {
         try {
             Long messageCount = rabbitTemplate.execute(channel -> channel.messageCount(RABBITMQ_CONSTANTS.PAYMENT_DLQ));
@@ -34,7 +34,7 @@ public class DLQScheduler {
             }
 
         } catch (Exception e) {
-            log.error("❌ Error in DLQ retry scheduler", e);
+            log.error("Error in DLQ retry scheduler", e);
         }
     }
 
@@ -64,7 +64,7 @@ public class DLQScheduler {
             rabbitTemplate.send(RABBITMQ_CONSTANTS.PAYMENT_QUEUE, message);
             log.info("Retried DLQ message, new retry count: {}", dlqRetryCount);
         } catch (Exception e) {
-            log.error("❌ Error processing DLQ message", e);
+            log.error("Error processing DLQ message", e);
         }
     }
 }

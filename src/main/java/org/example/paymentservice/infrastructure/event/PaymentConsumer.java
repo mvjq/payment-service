@@ -27,7 +27,7 @@ public class PaymentConsumer {
     @RabbitListener(queues = RABBITMQ_CONSTANTS.PAYMENT_QUEUE)
     public void consumePaymentCreated(PaymentCreatedEvent event) {
         try {
-            log.info("📥 Received payment event: paymentId={}", event.getPaymentId());
+            log.info("Received payment event: paymentId={}", event.getPaymentId());
 
             Optional<Webhook> webhook = webhookRepositoryPort.findById(event.getWebhookId());
 
