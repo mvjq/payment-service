@@ -52,8 +52,15 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:rabbitmq")
-    
+
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    // bdd with cucumber
+    testImplementation("io.cucumber:cucumber-java:7.18.0")
+    testImplementation("io.cucumber:cucumber-spring:7.18.0")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.18.0")
+    testImplementation("org.junit.platform:junit-platform-suite:1.10.1")
+
 }
 
 tasks.withType<Test> {
@@ -69,5 +76,20 @@ tasks.jacocoTestReport {
     reports {
         xml.required.set(true)
         html.required.set(true)
+    }
+}
+
+tasks.register<Test>("cucumberTest") {
+    description = "Run Cucumber BDD tests"
+    group = "verification"
+
+    useJUnitPlatform {
+        includeTags("cucumber")
+    }
+
+    include("**/CucumberTestRunner.class")
+
+    testLogging {
+        events("passed", "skipped", "failed")
     }
 }
